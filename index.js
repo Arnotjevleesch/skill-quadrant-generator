@@ -29,7 +29,8 @@ var myDataSource = {
         }, {
             "x": "100"
         }]
-    }]
+    }],
+    "dataset":[{}]
 };
 
 function prettyPrint() {
@@ -47,7 +48,7 @@ const chart = new Vue({
     height: '600', //to specify the height of the chart
     dataFormat: 'json',
     dataSource: {},
-    dataSet: '[{"color": "#00aee4","data":[{"x": "85","y": "90","z": "10","name": "Git"}]}]'
+    dataSet: ''
   },
   mounted () {
     //prettyPrint();
@@ -55,10 +56,7 @@ const chart = new Vue({
   },
   methods: {  
     updateSkills() {
-
       this.dataSource.dataset = JSON.parse(this.dataSet);
-
-      console.log(JSON.stringify(this.dataSource));
     }
   }
 });
