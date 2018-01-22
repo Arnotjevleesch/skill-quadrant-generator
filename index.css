@@ -1,0 +1,9 @@
+#app {
+  display: grid;
+  grid-template-columns: 80% 20%;
+  grid-gap: 10px;
+}
+
+pre {
+  border: 1px solid rgba(0, 0, 0, .2);
+}
