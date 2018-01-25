@@ -32,11 +32,13 @@
       ></fusioncharts>
       </div>
 
-      <textarea id="myTextArea" cols=50 rows=10 v-model="dataSet" @change="updateSkills"></textarea>
+      <textarea id="myTextArea" cols=50 rows=10 v-model="dataSet" @change="updateSkills">{{dataSource.dataset}}</textarea>
       
-      <b-modal id="modal1" ref="myModalRef" title="Add Compétence">
-          <compact-picker v-model="colors" />
-      </b-modal>
+      <div >
+        <b-modal id="modal1" ref="myModalRef" title="Add Compétence">
+            <compact-picker v-model="colors" />
+        </b-modal>
+      </div>
 
       
 

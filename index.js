@@ -69,6 +69,7 @@ var chart = new Vue({
     height: '600', //to specify the height of the chart
     dataFormat: 'json',
     dataSource: {},
+/*    
     events: {
       chartClick: function (eventObj, dataObj) {
         // 35 -> 0 ; 980 -> 100
@@ -81,8 +82,26 @@ var chart = new Vue({
         //this.$refs.myModalRef.show();
       }   
     },
+*/
     dataSet: '',
     colors: defaultColors
+  },
+  computed: {    
+    events: function () {
+      return {
+        chartClick: function (eventObj, dataObj) {
+          // 35 -> 0 ; 980 -> 100
+          // (980-35)/100 = 9.45
+          console.log((dataObj.chartX - 35) / 9.45);
+          // 560 -> 0 ; 40 -> 100
+          // (40-560)/100 = -5.2
+          console.log((dataObj.chartY - 560) / -5.2);
+
+          console.log(this.$refs.myModalRef.show());
+          //this.showModal();
+        }
+      }
+    }   
   },
   mounted () {
     //prettyPrint();
@@ -91,6 +110,9 @@ var chart = new Vue({
   methods: {  
     updateSkills() {
       this.dataSource.dataset = JSON.parse(this.dataSet);
+    },
+    showModal() {
+      this.$refs.myModalRef.show();
     }
   }
 });
