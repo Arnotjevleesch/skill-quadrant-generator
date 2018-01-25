@@ -56,49 +56,32 @@ var defaultColors = {
   a: 1
 }
 
-var compact = VueColor.Compact
-
 var chart = new Vue({
   el: '#app',
-  components: {
-    'compact-picker': compact
-  },
   data: {
     type: 'bubble',
     width: '1000', //to specify the width of the chart
     height: '600', //to specify the height of the chart
     dataFormat: 'json',
     dataSource: {},
-/*    
-    events: {
-      chartClick: function (eventObj, dataObj) {
-        // 35 -> 0 ; 980 -> 100
-        // (980-35)/100 = 9.45
-        console.log((dataObj.chartX - 35) / 9.45);
-        // 560 -> 0 ; 40 -> 100
-        // (40-560)/100 = -5.2
-        console.log((dataObj.chartY - 560) / -5.2);
-
-        //this.$refs.myModalRef.show();
-      }   
-    },
-*/
+    x: undefined,
+    y: undefined,
     dataSet: '',
     colors: defaultColors
   },
-  computed: {    
+  computed: {     
     events: function () {
+      var self = this;
       return {
         chartClick: function (eventObj, dataObj) {
           // 35 -> 0 ; 980 -> 100
           // (980-35)/100 = 9.45
-          console.log((dataObj.chartX - 35) / 9.45);
+          self.x = Math.round((dataObj.chartX - 35) / 9.45);
           // 560 -> 0 ; 40 -> 100
           // (40-560)/100 = -5.2
-          console.log((dataObj.chartY - 560) / -5.2);
+          self.y = Math.round((dataObj.chartY - 560) / -5.2);
 
-          console.log(this.$refs.myModalRef.show());
-          //this.showModal();
+          self.$refs.myModalRef.show();
         }
       }
     }   

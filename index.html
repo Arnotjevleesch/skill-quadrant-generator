@@ -13,7 +13,6 @@
     <script type="text/javascript" src="https://unpkg.com/vue-fusioncharts/dist/vue-fusioncharts.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue-color/2.4.3/vue-color.min.js"></script>
 
     <script type="text/javascript" src="https://unpkg.com/jquery@3.3.1/dist/jquery.js"></script>
     <script type="text/javascript" src="https://unpkg.com/jqueryui@1.11.1/jquery-ui.js"></script>
@@ -36,7 +35,15 @@
       
       <div >
         <b-modal id="modal1" ref="myModalRef" title="Add Compétence">
-            <compact-picker v-model="colors" />
+          <b-container fluid>
+            <b-row>
+              <b-col sm="12"><b-form-input v-model="colors" type="color"></b-form-input></b-col>
+              <b-col sm="3"><label for="x">X: </label></b-col>
+              <b-col sm="9"><b-form-input v-model="x" type="number"></b-form-input></b-col>
+              <b-col sm="3"><label for="y">Y: </label></b-col>
+              <b-col sm="9"><b-form-input v-model="y" type="number"></b-form-input></b-col>
+            </b-row>
+          </b-container>
         </b-modal>
       </div>
 
