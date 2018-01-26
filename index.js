@@ -30,7 +30,7 @@ var myDataSource = {
             "x": "100"
         }]
     }],
-    "dataset":undefined
+    "dataset":[{}]
 };
 
 var chart = new Vue({
@@ -43,9 +43,9 @@ var chart = new Vue({
     dataSource: {},
     x: undefined,
     y: undefined,
+    z: 10,
     lib: undefined,
-    colors: undefined,
-    myTextArea: undefined
+    colors: "#aabbcc"
   },
   computed: {     
     events: function () {
@@ -62,6 +62,13 @@ var chart = new Vue({
           self.$refs.myModalRef.show();
         }
       }
+    },
+    myTextArea: function () {
+      mta = Object.assign({}, this.myTextArea);
+      return JSON.stringify(
+        JSON.parse(mta)
+            .push({"color": this.colors,"data":[{"x": this.x,"y": this.y,"z": this.z,"name": this.lib}]})
+      );
     },
     dataSet: function () {
       if(this.myTextArea){
@@ -88,10 +95,10 @@ var chart = new Vue({
 
 
 function prettyPrint() {
-  var ugly = document.getElementById('myTextArea').value;
+  var ugly = document.getElementById('textarea').value;
   var obj = JSON.parse(ugly);
   var pretty = JSON.stringify(obj, undefined, 4);
-  document.getElementById('myTextArea').value = pretty;
+  document.getElementById('textarea').value = pretty;
 }
 
 $('.modal-content').draggable();

@@ -31,16 +31,18 @@
       ></fusioncharts>
       </div>
 
-      <textarea cols=50 rows=10 v-model="myTextArea"></textarea>
+      <b-form-textarea :rows="10" id="textarea" v-model="myTextArea"></b-form-textarea>
       
       <div >
-        <b-modal id="modal1" ref="myModalRef" title="Add Compétence">
+        <b-modal id="modal" ref="myModalRef" title="Add Compétence">
           <b-container fluid>
             <b-row>
               <b-col sm="2"><label for="x">X: </label></b-col>
               <b-col sm="10"><b-form-input id="x" v-model="x" type="number"></b-form-input></b-col>
               <b-col sm="2"><label for="y">Y: </label></b-col>
               <b-col sm="10"><b-form-input id="y" v-model="y" type="number"></b-form-input></b-col>
+              <b-col sm="2"><label for="z">Z: </label></b-col>
+              <b-col sm="10"><b-form-input id="z" v-model="z" type="range"></b-form-input></b-col>
               <b-col sm="2"><label for="lib">Libellé: </label></b-col>
               <b-col sm="10"><b-form-input id="lib" v-model="lib" type="text"></b-form-input></b-col>
               <b-col sm="12"><b-form-input v-model="colors" type="color"></b-form-input></b-col>
