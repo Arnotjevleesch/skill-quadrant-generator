@@ -64,7 +64,13 @@ var chart = new Vue({
       }
     },
     myTextArea: function () {
-      mta = Object.assign({}, this.myTextArea);
+      var mta;
+      if($('textarea').value === undefined) {
+        mta = "[]";
+      } else {
+        mta = $('textarea').value;
+      }
+
       return JSON.stringify(
         JSON.parse(mta)
             .push({"color": this.colors,"data":[{"x": this.x,"y": this.y,"z": this.z,"name": this.lib}]})
