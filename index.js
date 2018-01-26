@@ -30,31 +30,8 @@ var myDataSource = {
             "x": "100"
         }]
     }],
-    "dataset":[{"color": "#00aee4","data":[{"x": "85","y": "90","z": "10","name": "Git"}]}]
+    "dataset":undefined
 };
-
-var defaultColors = {
-  hex: '#194d33',
-  hsl: {
-    h: 150,
-    s: 0.5,
-    l: 0.2,
-    a: 1
-  },
-  hsv: {
-    h: 150,
-    s: 0.66,
-    v: 0.30,
-    a: 1
-  },
-  rgba: {
-    r: 25,
-    g: 77,
-    b: 51,
-    a: 1
-  },
-  a: 1
-}
 
 var chart = new Vue({
   el: '#app',
@@ -66,8 +43,9 @@ var chart = new Vue({
     dataSource: {},
     x: undefined,
     y: undefined,
-    dataSet: '',
-    colors: defaultColors
+    lib: undefined,
+    colors: undefined,
+    myTextArea: undefined
   },
   computed: {     
     events: function () {
@@ -84,18 +62,20 @@ var chart = new Vue({
           self.$refs.myModalRef.show();
         }
       }
-    }   
+    }  
   },
   mounted () {
     //prettyPrint();
     this.dataSource = Object.assign({}, myDataSource);
   },
   methods: {  
-    updateSkills() {
-      this.dataSource.dataset = JSON.parse(this.dataSet);
-    },
     showModal() {
       this.$refs.myModalRef.show();
+    }
+  },
+  watch: {
+    'myTextArea': function(val) {
+      this.dataSource.dataset = JSON.parse(val);
     }
   }
 });
