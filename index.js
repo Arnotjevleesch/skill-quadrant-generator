@@ -62,6 +62,12 @@ var chart = new Vue({
           self.$refs.myModalRef.show();
         }
       }
+    },
+    dataSet: function () {
+      if(this.myTextArea){
+        return JSON.parse(this.myTextArea);
+      }
+      return {};
     }  
   },
   mounted () {
@@ -74,8 +80,8 @@ var chart = new Vue({
     }
   },
   watch: {
-    'myTextArea': function(val) {
-      this.dataSource.dataset = JSON.parse(val);
+    'dataSet': function(val) {
+      this.dataSource.dataset = val;
     }
   }
 });
