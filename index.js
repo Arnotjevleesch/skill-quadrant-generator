@@ -30,7 +30,7 @@ var myDataSource = {
             "x": "100"
         }]
     }],
-    "dataset":[{}]
+    "dataset":[{"data":[{}]}]
 };
 
 var chart = new Vue({
@@ -41,11 +41,11 @@ var chart = new Vue({
     height: '600', //to specify the height of the chart
     dataFormat: 'json',
     dataSource: {},
-    x: undefined,
-    y: undefined,
-    z: 10,
-    lib: undefined,
-    colors: "#aabbcc"
+    colors: "#aa0000",
+    x: "90",
+    y: "90",
+    z: "10",
+    lib: undefined
   },
   computed: {     
     events: function () {
@@ -63,41 +63,50 @@ var chart = new Vue({
         }
       }
     },
-    myTextArea: function () {
-      var mta;
-      if($('textarea').value === undefined) {
-        mta = "[]";
-      } else {
-        mta = $('textarea').value;
-      }
-
-      return JSON.stringify(
-        JSON.parse(mta)
-            .push({"color": this.colors,"data":[{"x": this.x,"y": this.y,"z": this.z,"name": this.lib}]})
-      );
-    },
-    dataSet: function () {
-      if(this.myTextArea){
-        return JSON.parse(this.myTextArea);
-      }
-      return {};
-    }  
+    bubbleData: function() {
+      return {"x": this.x.toString(),"y": this.y.toString(),"z": this.z.toString(),"name": this.lib};
+    }
   },
   mounted () {
     //prettyPrint();
     this.dataSource = Object.assign({}, myDataSource);
+    //this.dataSource.dataset[0].color = this.colors;
+    //this.dataSource.dataset[0].data[this.dataSource.dataset[0].data.length-1] = {"x": this.x.toString(),"y": this.y.toString(),"z": this.z.toString(),"name": this.lib}
+
+    //console.log(this.dataSource);
   },
   methods: {  
-    showModal() {
-      this.$refs.myModalRef.show();
+    handleOk (evt) {
+      this.dataSource.dataset[0].data.push({});
+      console.log(JSON.stringify(this.dataSource));
     }
   },
   watch: {
-    'dataSet': function(val) {
-      this.dataSource.dataset = val;
+    bubbleData: function(val) {
+      this.dataSource.dataset[0].color = "#0000aa";
+      //this.dataSource.dataset[0].data[this.dataSource.dataset[0].data.length-1] = val;
+      console.log(this.dataSource);
     }
   }
 });
+
+
+/*
+computed: {
+  styles: {
+      cache: false,
+      get: function() {
+          return {
+              slider: {
+                  height: 'auto'
+                  width: $('#slideshow').width(),
+              },
+          };
+      },
+  },
+},
+*/
+
 
 
 function prettyPrint() {
