@@ -1,3 +1,33 @@
+function saveTextAsFile(fileNameToSaveAs) {
+	var textToWrite = document.getElementById("textarea").value;
+	var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
+
+	var downloadLink = document.createElement("a");
+	downloadLink.download = fileNameToSaveAs + ".json";
+	downloadLink.innerHTML = "Download File";
+	if (window.URL != null)
+	{
+		// Chrome allows the link to be clicked
+		// without actually adding it to the DOM.
+		downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+	}
+	else
+	{
+		// Firefox requires the link to be added to the DOM
+		// before it can be clicked.
+		downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+		downloadLink.onclick = destroyClickedElement;
+		downloadLink.style.display = "none";
+		document.body.appendChild(downloadLink);
+	}
+
+	downloadLink.click();
+}
+
+function destroyClickedElement(event) {
+	document.body.removeChild(event.target);
+}
+
 Vue.use(VueFusionCharts);
 
 var myDataSource = {
@@ -30,7 +60,7 @@ var myDataSource = {
             "x": "100"
         }]
     }],
-    "dataset":[{"data":[{}]}]
+    "dataset":[{"id": "", "text": "", "color": "", "data":[]}]
 };
 
 var chart = new Vue({
@@ -41,11 +71,13 @@ var chart = new Vue({
     height: '600', //to specify the height of the chart
     dataFormat: 'json',
     dataSource: {},
-    colors: "#aa0000",
-    x: "90",
-    y: "90",
-    z: "10",
-    lib: undefined
+    id: "",
+    text: undefined,
+    color: undefined,
+    x: undefined,
+    y: undefined,
+    z: 10,
+    lib: ""
   },
   computed: {     
     events: function () {
@@ -58,65 +90,54 @@ var chart = new Vue({
           // 560 -> 0 ; 40 -> 100
           // (40-560)/100 = -5.2
           self.y = Math.round((dataObj.chartY - 560) / -5.2);
+          self.lib = "";
+
+          self.dataSource.dataset[0].data.splice(0, 0, {});
 
           self.$refs.myModalRef.show();
         }
       }
     },
-    bubbleData: function() {
-      return {"x": this.x.toString(),"y": this.y.toString(),"z": this.z.toString(),"name": this.lib};
+    currentSkill: function () {
+      return {"x": this.x, "y": this.y, "z": this.z, "name": this.lib}
+    },
+    datasetForTextarea: function () {
+      return JSON.stringify(this.dataSource.dataset[0], undefined, 4);
     }
   },
   mounted () {
     //prettyPrint();
     this.dataSource = Object.assign({}, myDataSource);
-    //this.dataSource.dataset[0].color = this.colors;
-    //this.dataSource.dataset[0].data[this.dataSource.dataset[0].data.length-1] = {"x": this.x.toString(),"y": this.y.toString(),"z": this.z.toString(),"name": this.lib}
-
-    //console.log(this.dataSource);
+    this.color = "#aabbcc";
   },
-  methods: {  
-    handleOk (evt) {
-      this.dataSource.dataset[0].data.push({});
-      console.log(JSON.stringify(this.dataSource));
+  methods: {
+    onOpen (evt) {
+      $('lib').focus();
+    },
+    saveAs() {
+      saveTextAsFile(this.id);
+    },
+    clear() {
+      this.id = "";
+      this.text = "";
+      this.dataSource.dataset[0].data.splice(0, this.dataSource.dataset[0].data.length);
     }
   },
   watch: {
-    bubbleData: function(val) {
-      this.dataSource.dataset[0].color = "#0000aa";
-      //this.dataSource.dataset[0].data[this.dataSource.dataset[0].data.length-1] = val;
-      console.log(this.dataSource);
+    currentSkill: function(val) {
+      this.dataSource.dataset[0].data.splice(0, 1, val);
+    },
+    id: function(val) {
+      this.dataSource.dataset[0].id = val;
+    },
+    text: function(val) {
+      this.dataSource.dataset[0].text = val;
+    },
+    color: function(val) {
+      this.dataSource.dataset[0].color = val;
     }
   }
 });
 
-
-/*
-computed: {
-  styles: {
-      cache: false,
-      get: function() {
-          return {
-              slider: {
-                  height: 'auto'
-                  width: $('#slideshow').width(),
-              },
-          };
-      },
-  },
-},
-*/
-
-
-
-function prettyPrint() {
-  var ugly = document.getElementById('textarea').value;
-  var obj = JSON.parse(ugly);
-  var pretty = JSON.stringify(obj, undefined, 4);
-  document.getElementById('textarea').value = pretty;
-}
-
 $('.modal-content').draggable();
-
-
 

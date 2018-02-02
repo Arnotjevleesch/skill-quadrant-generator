@@ -31,10 +31,17 @@
       ></fusioncharts>
       </div>
       
-      <b-form-input v-model="colors" type="color"></b-form-input>
+      <div>
+        <b-form-input v-model="id" type="text" placeholder="Enter the json filename"></b-form-input>
+        <b-form-input v-model="text" type="text" placeholder="Enter the skill category"></b-form-input>
+        <b-form-input v-model="color" type="color"></b-form-input>
+        <b-form-textarea id="textarea" :value="datasetForTextarea" :rows="14" :max-rows="20" readonly></b-form-textarea>
+        <b-button variant="primary" @click="saveAs">Save as...</b-button>
+        <b-button variant="primary" @click="clear">Clear all</b-button>
+      </div>
 
       <div>
-        <b-modal id="modal" ref="myModalRef" title="Add Compétence">
+        <b-modal id="modal" ref="myModalRef" title="Add Skill" @shown="onOpen">
           <b-container fluid>
             <b-row>
               <b-col sm="2"><label for="x">X: </label></b-col>
@@ -43,8 +50,8 @@
               <b-col sm="10"><b-form-input id="y" v-model="y" type="number"></b-form-input></b-col>
               <b-col sm="2"><label for="z">Z: </label></b-col>
               <b-col sm="10"><b-form-input id="z" v-model="z" type="range"></b-form-input></b-col>
-              <b-col sm="2"><label for="lib">Libellé: </label></b-col>
-              <b-col sm="10"><b-form-input id="lib" v-model="lib" type="text"></b-form-input></b-col>
+              <b-col sm="2"><label for="lib">Name: </label></b-col>
+              <b-col sm="10"><b-form-input id="lib" v-model="lib" type="text" placeholder="Enter the skill"></b-form-input></b-col>
             </b-row>
           </b-container>
         </b-modal>
