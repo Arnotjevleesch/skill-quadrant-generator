@@ -30,12 +30,12 @@
         :events="events"
       ></fusioncharts>
       </div>
-      
+
       <div>
         <b-form-input v-model="id" type="text" placeholder="Enter the json filename"></b-form-input>
         <b-form-input v-model="text" type="text" placeholder="Enter the skill category"></b-form-input>
         <b-form-input v-model="color" type="color"></b-form-input>
-        <b-form-textarea id="textarea" :value="datasetForTextarea" :rows="14" :max-rows="20" readonly></b-form-textarea>
+        <textarea id="textarea" rows="14" :value="getTAValue()" @input="onTAChange"></textarea>
         <b-button variant="primary" @click="saveAs">Save as...</b-button>
         <b-button variant="primary" @click="clear">Clear all</b-button>
       </div>

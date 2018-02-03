@@ -79,7 +79,7 @@ var chart = new Vue({
     z: 10,
     lib: ""
   },
-  computed: {     
+  computed: {
     events: function () {
       var self = this;
       return {
@@ -100,9 +100,6 @@ var chart = new Vue({
     },
     currentSkill: function () {
       return {"x": this.x, "y": this.y, "z": this.z, "name": this.lib}
-    },
-    datasetForTextarea: function () {
-      return JSON.stringify(this.dataSource.dataset[0], undefined, 4);
     }
   },
   mounted () {
@@ -114,6 +111,19 @@ var chart = new Vue({
     onOpen (evt) {
       $('lib').focus();
     },
+		getTAValue() {
+			if(this.dataSource.dataset){
+				return JSON.stringify(this.dataSource.dataset[0], undefined, 4);
+			}
+			return "";
+		},
+		onTAChange() {
+			var obj = JSON.parse($('textarea').val());
+			this.id = obj.id;
+			this.text = obj.text;
+			this.color = obj.color;
+			this.dataSource.dataset.splice(0, 1, obj);
+		},
     saveAs() {
       saveTextAsFile(this.id);
     },
@@ -140,4 +150,3 @@ var chart = new Vue({
 });
 
 $('.modal-content').draggable();
-
